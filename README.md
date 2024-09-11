@@ -11,3 +11,10 @@ Server listening at http://localhost:7777
 $ curl http://localhost:7777
 OK
 ```
+
+## Contribution
+
+```
+$ npm run dev
+$ npm run pretter-watch
+```
