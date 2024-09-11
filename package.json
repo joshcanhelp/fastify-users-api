@@ -7,7 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json",
+    "dev": "rm -rf ./dist && tsc -w -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505/issues"
   },
-  "homepage": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505#readme"
+  "homepage": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505#readme",
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "typescript": "^5.6.2"
+  }
 }
