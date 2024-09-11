@@ -11,6 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
     "dev": "rm -rf ./dist && tsc -w -p tsconfig.json",
+    "prettier": "prettier --write src",
+    "prettier-watch": "onchange './src/**/*.ts' -- prettier --write --ignore-unknown {{changed}}",
     "start": "dotenvx run -- npx nodemon ./dist/index.js"
   },
   "repository": {
@@ -25,10 +27,13 @@
   "homepage": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505#readme",
   "devDependencies": {
     "@types/node": "^22.5.4",
+    "onchange": "^7.1.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.6.2"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.14.0",
+    "axios": "^1.7.7",
     "fastify": "^4.28.1"
   }
 }
