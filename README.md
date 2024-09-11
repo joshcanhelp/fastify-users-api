@@ -17,4 +17,5 @@ OK
 ```
 $ npm run dev
 $ npm run pretter-watch
+$ npm run test-watch
 ```
