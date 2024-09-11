@@ -1,0 +1,22 @@
+{
+  "name": "clerk-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505.git"
+  },
+  "author": "Josh Cunningham <josh@joshcanhelp.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505/issues"
+  },
+  "homepage": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505#readme"
+}
