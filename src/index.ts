@@ -1,6 +1,7 @@
 import Fastify, { FastifyInstance } from "fastify";
 
 import homeRoute from "./routes/home.js";
+import populateRoute from "./routes/populate.js";
 
 const { PORT } = process.env;
 const server: FastifyInstance = Fastify({
@@ -10,6 +11,7 @@ const server: FastifyInstance = Fastify({
 });
 
 server.register(homeRoute);
+server.register(populateRoute);
 
 try {
   const serverPort = PORT ? parseInt(PORT) : 8080;
