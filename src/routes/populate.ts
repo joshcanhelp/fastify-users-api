@@ -1,6 +1,8 @@
 import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
 
+import { isAuthorized } from "../handlers/is-authorized.js";
+
 ////
 /// Types
 //
@@ -51,7 +53,15 @@ const routeOptions = {
         },
       },
     },
+    headers: {
+      type: "object",
+      properties: {
+        Authorization: { type: "string" },
+      },
+      required: ["Authorization"],
+    },
   },
+  preHandler: [isAuthorized("populate:users")],
 };
 
 ////
@@ -59,7 +69,7 @@ const routeOptions = {
 //
 
 const routes: FastifyPluginCallback = async (server) => {
-  server.post("/populate", (request, reply) => {
+  server.post("/populate", routeOptions, (request, reply) => {
     // We don't want to start another populate process while one is still going.
     if (inProgress) {
       return reply.code(200).send({
