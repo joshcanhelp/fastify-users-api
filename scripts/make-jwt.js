@@ -18,5 +18,5 @@ if (!process.argv[3]) {
 console.log(await makeJwt(
   process.argv[2],
   process.argv[3].split(","),
-  process.env.TOKEN_SIGNING_SECRET,
+  process.env.TOKEN_SIGNING_KEY,
 ));
