@@ -1,7 +1,13 @@
+import fp from "fastify-plugin";
+
 import { initFastify } from "../app.js";
 import { makeJwt, validClients } from "../utils/jwt.js";
 
 const server = initFastify();
+
+vi.mock("../plugins/db.js", async () => ({
+  default: fp(async () => {}),
+}));
 
 vi.mock("axios", async () => ({
   default: {
