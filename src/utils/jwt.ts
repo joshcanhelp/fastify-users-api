@@ -48,10 +48,7 @@ export const verifyJwt = async (
     throw new Error('unexpected "sub" claim');
   }
 
-  if (
-    !payload.client_id ||
-    !validClients.includes(payload.client_id as string)
-  ) {
+  if (!payload.client_id || payload.client_id !== payload.sub) {
     throw new Error('unexpected "client_id" claim');
   }
 
