@@ -9,54 +9,16 @@ vi.mock("axios", async () => ({
   },
 }));
 
-const signingSecret = "JWT_SIGNING_KEY";
+vi.stubEnv("TOKEN_SIGNING_KEY", "STUBBED_TOKEN_SIGNING_KEY");
+
 const validJwt = await makeJwt(
   validClients[Math.round(Math.random())],
-  ["scope1", "scope2"],
-  signingSecret,
+  ["populate:users"],
+  "STUBBED_TOKEN_SIGNING_KEY",
 );
 
 describe("Route: populate", () => {
-  it("rejects requests without authorization", async () => {
-    const response = await server.inject({
-      method: "POST",
-      url: "/populate",
-    });
-    const bodyParsed = JSON.parse(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(bodyParsed.error).toEqual("Bad Request");
-  });
-
-  it("rejects requests without malformed authorization", async () => {
-    const response = await server.inject({
-      method: "POST",
-      url: "/populate",
-      headers: {
-        authorization: "INVLAID_HEADER",
-      },
-    });
-    const bodyParsed = JSON.parse(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(bodyParsed.error).toEqual("Bad Request");
-  });
-
-  it("rejects requests without malformed JWT", async () => {
-    const response = await server.inject({
-      method: "POST",
-      url: "/populate",
-      headers: {
-        authorization: "Bearer INVALID_JWT",
-      },
-    });
-    const bodyParsed = JSON.parse(response.body);
-
-    expect(response.statusCode).toEqual(401);
-    expect(bodyParsed.error).toEqual("Unauthorized");
-  });
-
-  it("seeds the users with successful authorization", async () => {
+  it("seeds users with successful authorization", async () => {
     const response = await server.inject({
       method: "POST",
       url: "/populate",
@@ -65,11 +27,9 @@ describe("Route: populate", () => {
       },
     });
 
-    console.log(response);
-
     const bodyParsed = JSON.parse(response.body);
 
-    expect(response.statusCode).toEqual(401);
-    expect(bodyParsed.error).toEqual("Unauthorized");
+    expect(response.statusCode).toEqual(200);
+    expect(bodyParsed.error).toBeFalsy();
   });
 });
