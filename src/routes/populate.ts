@@ -34,7 +34,7 @@ interface RandomUserApiResponse {
 
 let inProgress = false;
 // TODO: Increase to 5000
-const populateUsersCount = 1000;
+const populateUsersCount = 10;
 
 const routeOptions = {
   schema: {
@@ -42,7 +42,10 @@ const routeOptions = {
       default: {
         type: "object",
         properties: {
-          result: {
+          message: {
+            type: "string",
+          },
+          error: {
             type: "string",
           },
         },
@@ -60,7 +63,7 @@ const routes: FastifyPluginCallback = async (server) => {
     // We don't want to start another populate process while one is still going.
     if (inProgress) {
       return reply.code(200).send({
-        result: "Populate is in progress, please try again later...",
+        message: "Populate is in progress, please try again later...",
       });
     }
 
@@ -91,7 +94,7 @@ const routes: FastifyPluginCallback = async (server) => {
       });
 
     reply.code(200).send({
-      result: "Users are being added now...",
+      message: "Users are being added now...",
     });
   });
 };
