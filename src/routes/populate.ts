@@ -38,6 +38,8 @@ let inProgress = false;
 // TODO: Increase to 5000
 const populateUsersCount = 10;
 
+// TODO: Conver to shared schema with /clerks
+// https://fastify.dev/docs/v4.21.x/Reference/Validation-and-Serialization/#adding-a-shared-schema
 const routeOptions = {
   schema: {
     response: {
