@@ -9,7 +9,7 @@ import { isAuthorized } from "../handlers/is-authorized.js";
 
 interface ClerksUser {
   registeredDate: string;
-  registeredUnixTime?: number;
+  registeredUnixTime: number;
   name: string;
   email: string;
   phone: string;
@@ -77,9 +77,16 @@ const routeOptions = {
 
 const routes: FastifyPluginCallback = async (server) => {
   server.get("/clerks", routeOptions, (request, reply) => {
-    reply.code(200).send({
-      users: [],
-    });
+    let users: ClerksUser[] = [];
+    try {
+      const query = request.database.select();
+      users = query.all() as ClerksUser[];
+    } catch (error: any) {
+      request.log.error(`Clerks: error getting users - ${error.message}`);
+      return reply.code(500).send({ error: "Error getting users ..." });
+    }
+
+    reply.code(200).send({ users });
   });
 };
 
