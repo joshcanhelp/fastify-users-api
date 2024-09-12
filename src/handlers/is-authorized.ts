@@ -2,10 +2,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 import { AccessTokenPayload, verifyJwt } from "../utils/jwt.js";
 
-const { TOKEN_SIGNING_KEY = "" } = process.env;
-
 export const isAuthorized = (scope: string | string[]) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
+    const { TOKEN_SIGNING_KEY = "" } = process.env;
     const { authorization } = request.headers;
     const authHeaderParts = authorization!.split(" ");
 
