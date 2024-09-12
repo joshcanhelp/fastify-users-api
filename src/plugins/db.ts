@@ -1,11 +1,14 @@
 import { FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync, StatementSync } from "node:sqlite";
 import * as path from "path";
 
 declare module "fastify" {
   interface FastifyRequest {
-    database: DatabaseSync;
+    database: {
+      insert: () => StatementSync;
+      select: () => StatementSync;
+    };
   }
 }
 
@@ -28,7 +31,23 @@ const sqlite: FastifyPluginAsync = async (fastify) => {
     ) STRICT
   `);
 
-  fastify.decorateRequest("database", { getter: () => database });
+  const dbInterface = {
+    insert: () =>
+      database.prepare(
+        `INSERT INTO user_data (
+          registeredDate, 
+          registeredUnixTime, 
+          name, 
+          email, 
+          phone, 
+          picture
+        )
+        VALUES (?, ?, ?, ?, ?, ?)`,
+      ),
+    select: () => database.prepare(`SELECT * FROM user_data`),
+  };
+
+  fastify.decorateRequest("database", { getter: () => dbInterface });
 };
 
 export default fp(sqlite, "4.x");
