@@ -91,10 +91,23 @@ const routes: FastifyPluginCallback = async (server) => {
       .get(apiUrl.toString())
       .then((response) => {
         const userResults = response.data as RandomUserApiResponse;
+        const insert = request.database.insert();
 
-        // TODO: Save to DB
-
-        request.log.info(`Populate: got ${userResults.info.results}`);
+        try {
+          for (const user of userResults.results) {
+            insert.run(
+              user.registered.date,
+              new Date(user.registered.date).getTime(),
+              user.name.title + " " + user.name.first + " " + user.name.last,
+              user.email,
+              user.phone,
+              user.picture.large,
+            );
+          }
+          request.log.info(`Populate: saved ${userResults.info.results}`);
+        } catch (error: any) {
+          request.log.error(`Populate: error saving users ${error.message}`);
+        }
       })
       .catch((error) => {
         request.log.error(
