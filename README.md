@@ -14,7 +14,9 @@ OK
 
 ## Routes
 
-All routes except the home route require authorization using a JWT in an `Authorization` header. These tokens can be minted using `scripts/make-jwt.js`. 
+All routes except the home route require authorization using a JWT in an `Authorization` header. A JWT-formatted access token has the benefit of allowing scoped API access for specific clients without exposing the secret. 
+
+Acces tokens can be minted using `scripts/make-jwt.js`:
 
 ```bash
 $ node ./scripts/make-jwt.js VALID_CLIENT_ID populate:users
@@ -34,7 +36,7 @@ $ curl -X POST -H "Authorization: Bearer $(\
   )" http://localhost:7777/populate
 ```
 
-## `GET /clerks`
+### `GET /clerks`
 
 This endpoint requires an access token with a `read:users` scope.
 
