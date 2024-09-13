@@ -106,12 +106,6 @@ const routeOptions = {
 const routes: FastifyPluginCallback = async (server) => {
   server.get("/clerks", routeOptions, (request, reply) => {
     let users: ClerksUser[] = [];
-    const {
-      limit,
-      email,
-      starting_after: startAfter,
-      ending_before: endBefore,
-    } = request.query as ClerksRouteQuery;
 
     try {
       const query = request.database.select();
