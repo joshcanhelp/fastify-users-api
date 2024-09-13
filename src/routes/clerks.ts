@@ -16,6 +16,13 @@ interface ClerksUser {
   picture: string;
 }
 
+interface ClerksRouteQuery {
+  limit: number;
+  starting_after: number;
+  ending_before: number;
+  email: string;
+}
+
 ////
 /// Constants
 //
@@ -67,6 +74,27 @@ const routeOptions = {
       },
       required: ["Authorization"],
     },
+    query: {
+      type: "object",
+      properties: {
+        limit: {
+          type: "integer",
+          maximum: 100,
+          minimum: 1,
+        },
+        starting_after: {
+          type: "integer",
+          minimum: 1,
+        },
+        ending_before: {
+          type: "integer",
+          minimum: 1,
+        },
+        email: {
+          type: "string",
+        },
+      },
+    },
   },
   preHandler: [isAuthorized("read:users")],
 };
@@ -78,6 +106,13 @@ const routeOptions = {
 const routes: FastifyPluginCallback = async (server) => {
   server.get("/clerks", routeOptions, (request, reply) => {
     let users: ClerksUser[] = [];
+    const {
+      limit,
+      email,
+      starting_after: startAfter,
+      ending_before: endBefore,
+    } = request.query as ClerksRouteQuery;
+
     try {
       const query = request.database.select();
       users = query.all() as ClerksUser[];
