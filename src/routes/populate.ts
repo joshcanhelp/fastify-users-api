@@ -2,12 +2,13 @@ import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
 
 import { isAuthorized } from "../handlers/is-authorized.js";
+import { insertUsers } from "../utils/db.js";
 
 ////
 /// Types
 //
 
-interface RandomUser {
+export interface RandomUser {
   registered: {
     date: string;
   };
@@ -91,22 +92,12 @@ const routes: FastifyPluginCallback = async (server) => {
       .get(apiUrl.toString())
       .then((response) => {
         const userResults = response.data as RandomUserApiResponse;
-        const insert = request.database.insert();
 
         try {
-          for (const user of userResults.results) {
-            insert.run(
-              user.registered.date,
-              new Date(user.registered.date).getTime(),
-              user.name.title + " " + user.name.first + " " + user.name.last,
-              user.email,
-              user.phone,
-              user.picture.large,
-            );
-          }
+          insertUsers(userResults.results);
           request.log.info(`Populate: saved ${userResults.info.results}`);
         } catch (error: any) {
-          request.log.error(`Populate: error saving users ${error.message}`);
+          request.log.error(`Populate: error saving users - ${error.message}`);
         }
       })
       .catch((error) => {
