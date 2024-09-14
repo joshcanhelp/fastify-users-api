@@ -1,0 +1,18 @@
+services:
+  app:
+    image: node:22-alpine
+    container_name: clerks-api
+    restart: unless-stopped
+    working_dir: /home/app
+    environment:
+      - PORT=6666
+      - TOKEN_SIGNING_KEY=67d823bfec0f690f4ce2514617cca306
+      - DB_FILE_LOCATION=/home/app/db
+      - NODE_ENV=docker
+    ports:
+      - "7777:6666"
+    volumes:
+      - ./dist:/home/app/dist
+      - ./node_modules:/home/app/node_modules
+      - ./db:/home/app/db
+    command: /home/app/node_modules/.bin/nodemon --experimental-sqlite ./dist/index.js
