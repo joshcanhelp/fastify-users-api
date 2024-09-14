@@ -1,6 +1,7 @@
 node_modules
 dist
 .env
-db
 
-!db/.keep
+!/db
+/db/*
+!/db/.keep

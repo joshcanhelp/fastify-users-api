@@ -7,7 +7,6 @@ Basic first steps:
 ```bash
 $ npm ci
 $ npm run build
-$ mkdir db
 ```
 
 ### Running locally
