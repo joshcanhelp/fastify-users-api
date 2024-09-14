@@ -90,3 +90,11 @@ export const getUsers = (options: ClerksRouteQuery) => {
   const selectStatement = database.prepare(queryString);
   return selectStatement.all() as ClerksUser[];
 };
+
+export const getUserCount = () => {
+  return (
+    database.prepare("SELECT count(*) AS total FROM user_data").all()[0] as {
+      total: number;
+    }
+  ).total;
+};

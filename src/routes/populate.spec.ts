@@ -5,6 +5,7 @@ const server = initFastify();
 
 vi.mock("../utils/db.js", async () => ({
   insertUsers: vi.fn(),
+  getUserCount: vi.fn(() => 5000),
 }));
 
 vi.mock("axios", async () => ({

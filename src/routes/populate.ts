@@ -2,7 +2,7 @@ import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
 
 import { isAuthorized } from "../handlers/is-authorized.js";
-import { insertUsers } from "../utils/db.js";
+import { getUserCount, insertUsers } from "../utils/db.js";
 
 ////
 /// Types
@@ -36,8 +36,7 @@ interface RandomUserApiResponse {
 //
 
 let inProgress = false;
-// TODO: Increase to 5000
-const populateUsersCount = 10;
+const populateUsersCount = 5000;
 
 // TODO: Conver to shared schema with /clerks
 // https://fastify.dev/docs/v4.21.x/Reference/Validation-and-Serialization/#adding-a-shared-schema
@@ -77,6 +76,13 @@ const routes: FastifyPluginCallback = async (server) => {
     if (inProgress) {
       return reply.code(200).send({
         message: "Populate is in progress, please try again later...",
+      });
+    }
+
+    const userCount = getUserCount();
+    if (userCount > 1000000) {
+      return reply.code(409).send({
+        error: "User count is greater than 1,000,000 ...",
       });
     }
 
