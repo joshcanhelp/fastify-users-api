@@ -86,11 +86,7 @@ export const getUsers = (options: ClerksRouteQuery) => {
     queryString += ` ${hasWhere ? "AND" : "WHERE"} registeredUnixTime < ${endingBefore}`;
   }
 
-  queryString += " ORDER BY registeredUnixTime DESC";
-
-  if (limit) {
-    queryString += ` LIMIT ${limit}`;
-  }
+  queryString += ` ORDER BY registeredUnixTime DESC LIMIT ${limit ? limit : 50}`;
 
   const selectStatement = database.prepare(queryString);
   return selectStatement.all();
