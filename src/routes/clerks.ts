@@ -41,7 +41,13 @@ const routeOptions = {
               registeredUnixTime: {
                 type: "integer",
               },
-              name: {
+              title: {
+                type: "string",
+              },
+              firstName: {
+                type: "string",
+              },
+              lastName: {
                 type: "string",
               },
               email: {
