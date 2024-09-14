@@ -5,8 +5,9 @@ import { initFastify } from "../app.js";
 
 const server = initFastify();
 
-vi.mock("../plugins/db.js", async () => ({
-  default: fp(async () => {}),
+vi.mock("../utils/db.js", async () => ({
+  insertUsers: vi.fn(),
+  getUsers: vi.fn(() => []),
 }));
 
 vi.mock("axios", async () => ({
