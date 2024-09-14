@@ -12,6 +12,7 @@
     "dev": "rm -rf ./dist && tsc -w -p tsconfig.json",
     "prettier": "prettier --write src",
     "prettier-watch": "onchange './src/**/*.ts' -- prettier --write --ignore-unknown {{changed}}",
+    "serve": "npm start",
     "start": "npx nodemon --env-file=.env --experimental-sqlite ./dist/index.js",
     "test": "vitest run",
     "test-watch": "vitest"
