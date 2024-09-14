@@ -24,18 +24,23 @@ const validJwt = await makeJwt(
 
 // TODO: Test for successful API request completion and error
 describe("Route: populate", () => {
-  it("seeds users with successful authorization", async () => {
-    const response = await server.inject({
+  let response: any;
+  beforeEach(async () => {
+    response = await server.inject({
       method: "POST",
       url: "/populate",
       headers: {
         authorization: `Bearer ${validJwt}`,
       },
     });
+  });
 
-    const bodyParsed = JSON.parse(response.body);
-
+  it("responds 200 with correct authorization", async () => {
     expect(response.statusCode).toEqual(200);
+  });
+
+  it("does not include an error with correct authorization", async () => {
+    const bodyParsed = JSON.parse(response.body);
     expect(bodyParsed.error).toBeFalsy();
   });
 });
