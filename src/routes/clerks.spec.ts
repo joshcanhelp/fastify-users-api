@@ -2,11 +2,12 @@ import fp from "fastify-plugin";
 
 import { initFastify } from "../app.js";
 import { makeJwt, validClients } from "../utils/jwt.js";
+import { insertUsers, getUsers } from "../utils/db.js";
 
 const server = initFastify();
 
-vi.mock("../plugins/db.js", async () => ({
-  default: fp(async () => {}),
+vi.mock("../utils/db.js", async () => ({
+  getUsers: vi.fn(() => []),
 }));
 
 vi.mock("axios", async () => ({

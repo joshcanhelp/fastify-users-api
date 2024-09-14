@@ -1,13 +1,13 @@
-import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
 
 import { isAuthorized } from "../handlers/is-authorized.js";
+import { getUsers } from "../utils/db.js";
 
 ////
 /// Types
 //
 
-interface ClerksUser {
+export interface ClerksUser {
   registeredDate: string;
   registeredUnixTime: number;
   name: string;
@@ -16,7 +16,7 @@ interface ClerksUser {
   picture: string;
 }
 
-interface ClerksRouteQuery {
+export interface ClerksRouteQuery {
   limit: number;
   starting_after: number;
   ending_before: number;
@@ -105,17 +105,14 @@ const routeOptions = {
 
 const routes: FastifyPluginCallback = async (server) => {
   server.get("/clerks", routeOptions, (request, reply) => {
-    let users: ClerksUser[] = [];
-
     try {
-      const query = request.database.select();
-      users = query.all() as ClerksUser[];
+      reply
+        .code(200)
+        .send({ users: getUsers(request.query as ClerksRouteQuery) });
     } catch (error: any) {
       request.log.error(`Clerks: error getting users - ${error.message}`);
-      return reply.code(500).send({ error: "Error getting users ..." });
+      reply.code(500).send({ error: "Error getting users ..." });
     }
-
-    reply.code(200).send({ users });
   });
 };
 
