@@ -18,7 +18,7 @@ export interface ClerksRouteQuery {
 /// Constants
 //
 
-// TODO: Conver to shared schema with /populate
+// TODO: Convert to shared schema with /populate route
 // https://fastify.dev/docs/v4.21.x/Reference/Validation-and-Serialization/#adding-a-shared-schema
 const routeOptions = {
   schema: {

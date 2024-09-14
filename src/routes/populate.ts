@@ -38,7 +38,7 @@ interface RandomUserApiResponse {
 let inProgress = false;
 const populateUsersCount = 5000;
 
-// TODO: Conver to shared schema with /clerks
+// TODO: Convert to shared schema with /clerks route
 // https://fastify.dev/docs/v4.21.x/Reference/Validation-and-Serialization/#adding-a-shared-schema
 const routeOptions = {
   schema: {
