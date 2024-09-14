@@ -13,7 +13,7 @@
     "prettier": "prettier --write src",
     "prettier-watch": "onchange './src/**/*.ts' -- prettier --write --ignore-unknown {{changed}}",
     "serve": "npm start",
-    "start": "npx nodemon --env-file=.env --experimental-sqlite ./dist/index.js",
+    "start": "nodemon --env-file=.env --experimental-sqlite ./dist/index.js",
     "test": "vitest run",
     "test-watch": "vitest"
   },
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/hatchways-community/clerk-backend-assignment-24d62bf99d8e454fb465465f0b2d1505#readme",
   "devDependencies": {
     "@types/node": "^22.5.4",
+    "nodemon": "^3.1.4",
     "onchange": "^7.1.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.2",
