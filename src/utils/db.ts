@@ -19,7 +19,7 @@ database.exec(`
       id INTEGER PRIMARY KEY,
       registeredDate TEXT,
       registeredUnixTime INTEGER,
-      title TEXT,
+      honorific TEXT,
       firstName TEXT,
       lastName TEXT,
       email TEXT,
@@ -27,7 +27,6 @@ database.exec(`
       picture TEXT
     ) STRICT
   `);
-
 ////
 /// Exports
 //
@@ -38,7 +37,7 @@ export const insertUsers = (users: RandomUser[]) => {
     `INSERT INTO user_data (
         registeredDate, 
         registeredUnixTime, 
-        title, 
+        honorific, 
         firstName, 
         lastName, 
         email, 

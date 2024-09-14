@@ -41,7 +41,7 @@ const routeOptions = {
               registeredUnixTime: {
                 type: "integer",
               },
-              title: {
+              honorific: {
                 type: "string",
               },
               firstName: {
