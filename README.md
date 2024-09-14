@@ -7,6 +7,7 @@ Basic first steps:
 ```bash
 $ npm ci
 $ npm run build
+$ mkdir db
 ```
 
 ### Running locally
@@ -18,8 +19,12 @@ $ node --version
 v22.8.0
 $ touch .env
 $ echo "PORT=7777" >> .env
-$ echo "\nTOKEN_SIGNING_KEY=\"$(openssl rand -hex 16)\"" >> .env
+$ echo "TOKEN_SIGNING_KEY=\"$(openssl rand -hex 16)\"" >> .env
 $ echo "DB_FILE_LOCATION=\"$(pwd)/db\"" >> .env
+$ cat .env
+PORT=7777
+TOKEN_SIGNING_KEY="long, random string"
+DB_FILE_LOCATION="/current/working/dir/db"
 $ npm start
 Server listening at http://localhost:7777
 $ curl http://localhost:7777
@@ -32,7 +37,7 @@ Start Docker desktop and then:
 
 ```bash
 $ docker-compose up
-$ curl http://localhost:4444
+$ curl http://localhost:7777
 OK
 ```
 
@@ -40,21 +45,29 @@ OK
 
 All routes except the home route require authorization using a JWT in an `Authorization` header. A JWT-formatted access token has the benefit of allowing scoped API access for specific clients without exposing the secret. 
 
-Acces tokens can be minted using `scripts/make-jwt.js`:
+Access tokens can be minted using `scripts/make-jwt.js`. If running locally:
 
 ```bash
 $ node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID action:entity
 ```
 
+If running in Docker, save the `TOKEN_SIGNING_KEY` value in `./docker-compose.yml` in a `.env` file or set it in the command:
+
+```bash
+$ TOKEN_SIGNING_KEY=67d823bfec0f690f4ce2514617cca306 node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID action:entity
+```
+
+Notes:
 - First argument requires a valid client ID, found in `src/utils/jwt.ts`
 - Second argument is a comma-separated list of scopes
 
 ### `POST /populate`
 
-This endpoint requires an access token with a `populate:users` scope.
+This endpoint requires an access token with a `populate:users` scope. Replace `VALID_CLIENT_ID` in the command below and run it to add more users to the database.
 
 ```bash
-$ npm start
+# Note that this will use the .env file for the token signing secret.
+# If you're using Docker, create an .env file or add the var to the command below.
 $ curl -X POST -H "Authorization: Bearer $(\
   node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID populate:users \
   )" http://localhost:7777/populate
@@ -64,10 +77,11 @@ The endpoint will not allow concurrent populate requests and will limit the tota
 
 ### `GET /clerks`
 
-This endpoint requires an access token with a `read:users` scope.
+This endpoint requires an access token with a `read:users` scope. Replace `VALID_CLIENT_ID` in the command below and run it to see users saved in the database.
 
 ```bash
-$ npm start
+# Note that this will use the .env file for the token signing secret.
+# If you're using Docker, create an .env file or add the var to the command below.
 $ curl -X GET -H "Authorization: Bearer $(\
   node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID read:users \
   )" http://localhost:7777/clerks
