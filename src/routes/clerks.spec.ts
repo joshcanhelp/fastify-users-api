@@ -23,22 +23,82 @@ const validJwt = await makeJwt(
 
 describe("Route: clerks", () => {
   let response: any;
-  beforeEach(async () => {
-    response = await server.inject({
-      method: "GET",
-      url: "/clerks",
-      headers: {
-        authorization: `Bearer ${validJwt}`,
-      },
+  describe("Happy path", () => {
+    beforeEach(async () => {
+      response = await server.inject({
+        method: "GET",
+        url: "/clerks",
+        headers: {
+          authorization: `Bearer ${validJwt}`,
+        },
+      });
+    });
+
+    it("responds 200 with correct authorization", async () => {
+      expect(response.statusCode).toEqual(200);
+    });
+
+    it("does not include an error with correct authorization", async () => {
+      const bodyParsed = JSON.parse(response.body);
+      expect(bodyParsed).toEqual({ users: [] });
     });
   });
 
-  it("responds 200 with correct authorization", async () => {
-    expect(response.statusCode).toEqual(200);
-  });
+  describe("URL query parameters", () => {
+    it("rejects a too-high limit", async () => {
+      response = await server.inject({
+        method: "GET",
+        url: "/clerks",
+        headers: {
+          authorization: `Bearer ${validJwt}`,
+        },
+        query: {
+          limit: "1000",
+        },
+      });
+      expect(response.statusCode).toEqual(400);
+    });
 
-  it("does not include an error with correct authorization", async () => {
-    const bodyParsed = JSON.parse(response.body);
-    expect(bodyParsed).toEqual({ users: [] });
+    it("rejects a non-number limit", async () => {
+      response = await server.inject({
+        method: "GET",
+        url: "/clerks",
+        headers: {
+          authorization: `Bearer ${validJwt}`,
+        },
+        query: {
+          limit: "banana",
+        },
+      });
+      expect(response.statusCode).toEqual(400);
+    });
+
+    it("rejects a non-number starting_after", async () => {
+      response = await server.inject({
+        method: "GET",
+        url: "/clerks",
+        headers: {
+          authorization: `Bearer ${validJwt}`,
+        },
+        query: {
+          starting_after: "banana",
+        },
+      });
+      expect(response.statusCode).toEqual(400);
+    });
+
+    it("rejects a non-number ending_before", async () => {
+      response = await server.inject({
+        method: "GET",
+        url: "/clerks",
+        headers: {
+          authorization: `Bearer ${validJwt}`,
+        },
+        query: {
+          ending_before: "banana",
+        },
+      });
+      expect(response.statusCode).toEqual(400);
+    });
   });
 });
