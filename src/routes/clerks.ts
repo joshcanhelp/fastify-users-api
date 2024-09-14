@@ -7,15 +7,6 @@ import { getUsers } from "../utils/db.js";
 /// Types
 //
 
-export interface ClerksUser {
-  registeredDate: string;
-  registeredUnixTime: number;
-  name: string;
-  email: string;
-  phone: string;
-  picture: string;
-}
-
 export interface ClerksRouteQuery {
   limit: number;
   starting_after: number;

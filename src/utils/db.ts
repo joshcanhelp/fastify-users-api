@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
 import { RandomUser } from "../routes/populate.js";
-import { ClerksRouteQuery, ClerksUser } from "../routes/clerks.js";
+import { ClerksRouteQuery } from "../routes/clerks.js";
 
 ////
 /// Constants
@@ -19,7 +19,9 @@ database.exec(`
       id INTEGER PRIMARY KEY,
       registeredDate TEXT,
       registeredUnixTime INTEGER,
-      name TEXT,
+      title TEXT,
+      firstName TEXT,
+      lastName TEXT,
       email TEXT,
       phone TEXT,
       picture TEXT
@@ -36,18 +38,22 @@ export const insertUsers = (users: RandomUser[]) => {
     `INSERT INTO user_data (
         registeredDate, 
         registeredUnixTime, 
-        name, 
+        title, 
+        firstName, 
+        lastName, 
         email, 
         phone, 
         picture
       )
-      VALUES (?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
   );
   for (const user of users) {
     insertStatement.run(
       user.registered.date,
       new Date(user.registered.date).getTime(),
-      user.name.title + " " + user.name.first + " " + user.name.last,
+      user.name.title,
+      user.name.first,
+      user.name.last,
       user.email,
       user.phone,
       user.picture.large,
@@ -88,7 +94,7 @@ export const getUsers = (options: ClerksRouteQuery) => {
   }
 
   const selectStatement = database.prepare(queryString);
-  return selectStatement.all() as ClerksUser[];
+  return selectStatement.all();
 };
 
 export const getUserCount = () => {
