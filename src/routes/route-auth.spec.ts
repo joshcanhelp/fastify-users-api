@@ -1,4 +1,3 @@
-import fp from "fastify-plugin";
 import { InjectOptions } from "fastify";
 
 import { initFastify } from "../app.js";

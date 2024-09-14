@@ -9,6 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "types": ["vitest/globals"],
-    "declaration": true
+    "declaration": true,
+    "noUnusedLocals": true,
   }
 }

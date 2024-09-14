@@ -1,4 +1,3 @@
-import Fastify, { FastifyInstance } from "fastify";
 import { initFastify } from "./app.js";
 
 const { PORT } = process.env;

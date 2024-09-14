@@ -1,8 +1,5 @@
-import fp from "fastify-plugin";
-
 import { initFastify } from "../app.js";
 import { makeJwt, validClients } from "../utils/jwt.js";
-import { insertUsers, getUsers } from "../utils/db.js";
 
 const server = initFastify();
 
