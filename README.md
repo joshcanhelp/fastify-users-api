@@ -38,7 +38,7 @@ $ curl http://localhost:7777
 OK
 ```
 
-Note that the `env` values used in the app are hard-coded in `docker-compose.yml` and can be changed as needed. 
+Note that the environment variables used in the app are hard-coded in `docker-compose.yml` and can be changed as needed. 
 
 ## Routes
 
@@ -56,9 +56,9 @@ If running in Docker, save the `TOKEN_SIGNING_KEY` value in `./docker-compose.ym
 $ TOKEN_SIGNING_KEY=67d823bfec0f690f4ce2514617cca306 node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID action:entity
 ```
 
-Notes:
-- First argument requires a valid client ID, found in `src/utils/jwt.ts`
-- Second argument is a comma-separated list of scopes
+The first argument requires a valid client ID, found in `src/utils/jwt.ts`, and the second is a comma-separated list of scopes. 
+
+If the token does not validate during an API call, a more specific error message can be found in the server logs.
 
 ### `POST /populate`
 
