@@ -17,13 +17,11 @@ To run locally, make sure you have Node 22.x installed and then:
 $ node --version
 v22.8.0
 $ touch .env
+# Next command is not required; default port is 8080
 $ echo "PORT=7777" >> .env
-$ echo "TOKEN_SIGNING_KEY=\"$(openssl rand -hex 16)\"" >> .env
+# Any value can be used for testing
+$ echo "TOKEN_SIGNING_KEY=\"$(openssl rand -hex 32)\"" >> .env
 $ echo "DB_FILE_LOCATION=\"$(pwd)/db\"" >> .env
-$ cat .env
-PORT=7777
-TOKEN_SIGNING_KEY="long, random string"
-DB_FILE_LOCATION="/current/working/dir/db"
 $ npm start
 Server listening at http://localhost:7777
 $ curl http://localhost:7777
@@ -39,6 +37,8 @@ $ docker-compose up
 $ curl http://localhost:7777
 OK
 ```
+
+Note that the `env` values used in the app are hard-coded in `docker-compose.yml` and can be changed as needed. 
 
 ## Routes
 
