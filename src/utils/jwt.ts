@@ -16,8 +16,8 @@ export interface AccessTokenPayload {
 /// Constants
 //
 
-const validAudience = "https://user-api.clerk.com";
-const validIssuer = "https://auth.clerk.com";
+const validAudience = "https://user-api.users.com";
+const validIssuer = "https://auth.users.com";
 
 ////
 /// Exports

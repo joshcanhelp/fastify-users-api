@@ -28,7 +28,7 @@ describe("Route: populate", () => {
   beforeEach(async () => {
     response = await server.inject({
       method: "POST",
-      url: "/populate",
+      url: "/users/populate",
       headers: {
         authorization: `Bearer ${validJwt}`,
       },

@@ -17,8 +17,8 @@ vi.mock("axios", async () => ({
 
 describe("Routes: ALL", () => {
   const testableRoutes: InjectOptions[] = [
-    { url: "/populate", method: "POST" },
-    { url: "/clerks", method: "GET" },
+    { url: "/users/populate", method: "POST" },
+    { url: "/users", method: "GET" },
   ];
 
   for (const route of testableRoutes) {

@@ -1,4 +1,4 @@
-# Clerks API
+# Fastify Users API
 
 ## Getting Started
 
@@ -60,7 +60,7 @@ The first argument requires a valid client ID, found in `src/utils/jwt.ts`, and 
 
 If the token does not validate during an API call, a more specific error message can be found in the server logs.
 
-### `POST /populate`
+### `POST /users/populate`
 
 This endpoint requires an access token with a `populate:users` scope. Replace `VALID_CLIENT_ID` in the command below and run it to add more users to the database.
 
@@ -69,12 +69,12 @@ This endpoint requires an access token with a `populate:users` scope. Replace `V
 # If you're using Docker, create an .env file or add the var to the command below.
 $ curl -X POST -H "Authorization: Bearer $(\
   node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID populate:users \
-  )" http://localhost:7777/populate
+  )" http://localhost:7777/users/populate
 ```
 
 The endpoint will not allow concurrent populate requests and will limit the total number of users in the system to ~1,000,000.
 
-### `GET /clerks`
+### `GET /users`
 
 This endpoint requires an access token with a `read:users` scope. Replace `VALID_CLIENT_ID` in the command below and run it to see users saved in the database.
 
@@ -83,7 +83,7 @@ This endpoint requires an access token with a `read:users` scope. Replace `VALID
 # If you're using Docker, create an .env file or add the var to the command below.
 $ curl -X GET -H "Authorization: Bearer $(\
   node --env-file=.env ./scripts/make-jwt.js VALID_CLIENT_ID read:users \
-  )" http://localhost:7777/clerks
+  )" http://localhost:7777/users
 ```
 
 The following query parameters are allowed:
@@ -116,4 +116,4 @@ These tasks are called out because they need to be done but not within the scope
 A few other notes:
 
 - Tests are intentionally light since they were taking a fair amount of time to get the mocking correct with Fastify. I added, hopefully, enough to show you that I do know how to test things!
-- The assessment instructions for the `starting_after` and `ending_before` parameters on the `/clerks` route said to use a user ID as the pagination cursor. We're storing the registration date as a Unix time code (including milliseconds) and it seemed like a more useful cursor than the user ID, since you'll have the whole user record returned. Happy to refactor that as instructed if that's not acceptable. 
+- The assessment instructions for the `starting_after` and `ending_before` parameters on the `/users` route said to use a user ID as the pagination cursor. We're storing the registration date as a Unix time code (including milliseconds) and it seemed like a more useful cursor than the user ID, since you'll have the whole user record returned. Happy to refactor that as instructed if that's not acceptable. 

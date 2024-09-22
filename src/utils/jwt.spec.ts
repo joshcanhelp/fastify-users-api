@@ -3,8 +3,8 @@ import * as jose from "jose";
 import { verifyJwt, makeJwt, validClients } from "./jwt.js";
 
 const validJwtPayload = {
-  iss: "https://auth.clerk.com",
-  aud: "https://user-api.clerk.com",
+  iss: "https://auth.users.com",
+  aud: "https://user-api.users.com",
   sub: "4e6925fa05f4f999cba014f8a50ef486",
   client_id: "4e6925fa05f4f999cba014f8a50ef486",
 };
@@ -29,8 +29,8 @@ describe("Util: jwt", () => {
       expect(payload).toMatchObject({
         client_id: randomValidClient,
         scope: "scope1 scope2",
-        iss: "https://auth.clerk.com",
-        aud: "https://user-api.clerk.com",
+        iss: "https://auth.users.com",
+        aud: "https://user-api.users.com",
         sub: randomValidClient,
       });
     });

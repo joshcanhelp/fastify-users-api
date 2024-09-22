@@ -38,7 +38,7 @@ interface RandomUserApiResponse {
 let inProgress = false;
 const populateUsersCount = 5000;
 
-// TODO: Convert to shared schema with /clerks route
+// TODO: Convert to shared schema with /users route
 // https://fastify.dev/docs/v4.21.x/Reference/Validation-and-Serialization/#adding-a-shared-schema
 const routeOptions = {
   schema: {
@@ -71,7 +71,7 @@ const routeOptions = {
 //
 
 const routes: FastifyPluginCallback = async (server) => {
-  server.post("/populate", routeOptions, (request, reply) => {
+  server.post("/users/populate", routeOptions, (request, reply) => {
     // We don't want to start another populate process while one is still going.
     if (inProgress) {
       return reply.code(200).send({

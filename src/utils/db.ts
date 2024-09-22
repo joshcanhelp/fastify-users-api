@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
 import { RandomUser } from "../routes/populate.js";
-import { ClerksRouteQuery } from "../routes/clerks.js";
+import { UsersRouteQuery } from "../routes/users.js";
 
 ////
 /// Constants
@@ -61,7 +61,7 @@ export const insertUsers = (users: RandomUser[]) => {
 };
 
 // TODO: Mock sqlite and test
-export const getUsers = (options: ClerksRouteQuery) => {
+export const getUsers = (options: UsersRouteQuery) => {
   const {
     limit,
     email,

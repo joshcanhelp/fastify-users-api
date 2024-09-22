@@ -21,13 +21,13 @@ const validJwt = await makeJwt(
   "STUBBED_TOKEN_SIGNING_KEY",
 );
 
-describe("Route: clerks", () => {
+describe("Route: users", () => {
   let response: any;
   describe("Happy path", () => {
     beforeEach(async () => {
       response = await server.inject({
         method: "GET",
-        url: "/clerks",
+        url: "/users",
         headers: {
           authorization: `Bearer ${validJwt}`,
         },
@@ -48,7 +48,7 @@ describe("Route: clerks", () => {
     it("rejects a too-high limit", async () => {
       response = await server.inject({
         method: "GET",
-        url: "/clerks",
+        url: "/users",
         headers: {
           authorization: `Bearer ${validJwt}`,
         },
@@ -62,7 +62,7 @@ describe("Route: clerks", () => {
     it("rejects a non-number limit", async () => {
       response = await server.inject({
         method: "GET",
-        url: "/clerks",
+        url: "/users",
         headers: {
           authorization: `Bearer ${validJwt}`,
         },
@@ -76,7 +76,7 @@ describe("Route: clerks", () => {
     it("rejects a non-number starting_after", async () => {
       response = await server.inject({
         method: "GET",
-        url: "/clerks",
+        url: "/users",
         headers: {
           authorization: `Bearer ${validJwt}`,
         },
@@ -90,7 +90,7 @@ describe("Route: clerks", () => {
     it("rejects a non-number ending_before", async () => {
       response = await server.inject({
         method: "GET",
-        url: "/clerks",
+        url: "/users",
         headers: {
           authorization: `Bearer ${validJwt}`,
         },

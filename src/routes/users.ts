@@ -7,7 +7,7 @@ import { getUsers } from "../utils/db.js";
 /// Types
 //
 
-export interface ClerksRouteQuery {
+export interface UsersRouteQuery {
   limit: number;
   starting_after: number;
   ending_before: number;
@@ -101,13 +101,13 @@ const routeOptions = {
 //
 
 const routes: FastifyPluginCallback = async (server) => {
-  server.get("/clerks", routeOptions, (request, reply) => {
+  server.get("/users", routeOptions, (request, reply) => {
     try {
       reply
         .code(200)
-        .send({ users: getUsers(request.query as ClerksRouteQuery) });
+        .send({ users: getUsers(request.query as UsersRouteQuery) });
     } catch (error: any) {
-      request.log.error(`Clerks: error getting users - ${error.message}`);
+      request.log.error(`Users: error getting users - ${error.message}`);
       reply.code(500).send({ error: "Error getting users ..." });
     }
   });
